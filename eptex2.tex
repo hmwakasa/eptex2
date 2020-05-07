@@ -326,7 +326,7 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{\TeX の使い方}
+	\frametitle{PDF を得る流れ}
 	\begin{columns}[c]
 		\begin{column}{0.6\textwidth}
 			\begin{description}
@@ -353,13 +353,27 @@
 
 \begin{frame}
 	\frametitle{dvi ウェア}
-	dvi ファイルを pdf ファイルに変換するソフトウェア
-	\footnote{PDF 以外にも、PostScript や、各種画像ファイルに変換するものもある}
+	dvi ← \textbf{D}e\textbf{v}ice \textbf{I}ndependent （装置非依存）
+	
+	dvi ウェア……dvi ファイルを変換するソフトウェア
+	
 	\begin{itemize}
-		\item dvipdfmx, dvips など
+		\item dvipdfmx（PDF に変換）
+		\item dvips（PostScript に変換）
 	\end{itemize}
 	
-	使う処理系、フォーマット、dvi ウェアで、tex ファイルの書き方が変わるので注意
+	\begin{block}{dvi の仕様}
+		\begin{description}
+			\item[標準仕様] 装置非依存な部分。dvi ウェアで共通。
+			\item[拡張仕様] 装置依存な部分\footnote{色とか用紙サイズとか}。
+				dvi ウェアごとに\emph{異なる}。
+		\end{description}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\TeX ソースを書くうえでの注意点}
+	使う\TeX 処理系、dvi ウェアによって書き方が微妙に違う
 \end{frame}
 
 \begin{frame}
