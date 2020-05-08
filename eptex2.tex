@@ -862,58 +862,88 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{kpathsea ライブラリ}
-	TEXMF ツリーからファイルを検索する\\
-	{\footnotesize kpathsea ← Karl Berry 氏によって作られた path searching}
+	\frametitle{kpathsea ライブラリ と \aruby{ls-R}{ファイル一覧}}
+	\begin{block}{kpathsea ライブラリ}
+		TEXMF ツリーからファイルを検索する\\
+		{\footnotesize Karl Berry 氏によって作られた path searching}
+		
+		例: \typecommand{kpsehwhich hmtrump.sty}\\
+		{\scriptsize →\texttt{/usr/local/texlive/texmf-local/tex/latex/local/hmtrump.sty}}
+	\end{block}
 	
-	例: \typecommand{kpsehwhich hmtrump.sty}\\
-	{\scriptsize →\texttt{/usr/local/texlive/texmf-local/tex/latex/local/hmtrump.sty}}
-	
-	TEXMF ツリーに作られた \aruby{ls-R}{ファイル一覧} を見て検索する
-\end{frame}
-
-\begin{frame}
-	\frametitle{\aruby{ls-R}{ファイル一覧} の更新}
+	TEXMF ツリーに作られた \aruby{ls-R}{ファイル一覧} を見て検索する\\
 	TEXMF ツリーに変更 → \aruby{ls-R}{ファイル一覧} を更新する必要
-	\footnote{ls-R を使わない運用方法もあるらしいですが、
-	やったことがないのでわかりません}
-	
+	\footnote{ls-R を使わない運用方法もあるらしいですが、やったことがないのでわかりません}\\
 	\typecommand{sudo mktexlsr}
-	
-	{\scriptsize \texttt{sudo tlmgr update -{}-self -{}-all} 後も必要だが、\\
-	最近は tlmgr が自動でやっているっぽい}
 \end{frame}
 
 \begin{frame}
 	\frametitle{パッケージをインストールする}
 	ディストリビューションに含まれないパッケージを使いたい\\
-	→自分で TEXMF ツリーに入れる必要\\
+	→自分で TEXMF ツリー \textbf{(TEXMFLOCAL)} に入れる必要\\
 	{\footnotesize 作業ディレクトリに置いてもよいけれども}
 	
 	正しい場所に入れなければ正常に使えない
+	\footnote{拡張子に応じて、検索するディレクトリを決め打ってるため}
+\end{frame}
+
+\begin{frame}
+	\frametitle{TEXMF ツリーの構造}
+	TEXMFLOCAL\footnote{{\TeX} Live on UNIX の標準では \texttt{/usr/local/texlive/texmf-local}}
+	の構造を覗いてみる
+	\footnote{\href{https://texwiki.texjp.org/?TeX\%20\%E3\%81\%AE\%E3\%83\%87\%E3\%82\%A3\%E3\%83\%AC\%E3\%82\%AF\%E3\%83\%88\%E3\%83\%AA\%E6\%A7\%8B\%E6\%88\%90}
+	{https://texwiki.texjp.org/?TeX\%20のディレクトリ構成}参照}\\
+	\typecommand{tree -d -L 2 /usr/local/texlive/texmf-local}
+	
+	\begin{columns}
+		\begin{column}{0.6\textwidth}
+			ファイルの種類ごとに分類
+			\begin{description}
+				\small
+				\item[doc] ドキュメント（説明書）
+				\item[tex] パッケージの本体など
+				\item[font] フォント関連
+			\end{description}
+			さらにサブディレクトリで分類\\
+			そのなかでパッケージごとに分類
+		\end{column}
+		\begin{column}{0.35\textwidth}
+			\tiny\ttfamily
+			/usr/local/texlive/texmf-local\\
+			├── doc\\
+			│   ├── fonts\\
+			│   ├── latex\\
+			│   └── lualatex\\
+			├── source\\
+			│   └── latex\\
+			├── tex\\
+			│   ├── latex\\
+			│   ├── lualatex\\
+			│   └── plain\\
+			├── texdoc\\
+			├── tlpkg\\
+			└── web2c
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \begin{frame}
 	\frametitle{パッケージをインストールする場所}
-	かなり複雑なので {\TeX} Wiki\footnote{\href
-	{https://texwiki.texjp.org/?TeX\%20\%E3\%81\%AE\%E3\%83\%87\%E3\%82\%A3\%E3\%83\%AC\%E3\%82\%AF\%E3\%83\%88\%E3\%83\%AA\%E6\%A7\%8B\%E6\%88\%90}
-	{https://texwiki.texjp.org/?TeX\%20のディレクトリ構成}}
-	参照\\
-	{\footnotesize 中身を覗いてみればなんとなくわかる}
+	前述の通り、分類して TEXMFLOCAL に配置
 	
 	まずはパッケージドキュメントを確認
 	
-	\bgroup\footnotesize
-	\begin{block}{あまり失敗しない方法}
-		ドキュメントに記載がない場合
+	\begin{block}{ドキュメントに記載がない場合: あまり失敗しない方法}
+		以下にディレクトリを掘ってファイルを配置
 		\begin{itemize}
-			\item ドキュメントは \texttt{\$TEXMFLOCAL/doc/latex/パッケージ名}
-			\item その他は \texttt{\$TEXMFLOCAL/tex/latex/パッケージ名}
+			\small
+			\item ドキュメント→ \texttt{\$TEXMFLOCAL/doc/latex/<pkgname>}
+			\item *.dtx, *.doc→ \texttt{\$TEXMFLOCAL/source/latex/<pkgname>}
+			\item その他→ \texttt{\$TEXMFLOCAL/tex/latex/<pkgname>}
 		\end{itemize}
-		にディレクトリを作って、コピー\\
-		フォント関連などはもっと複雑で、上記の通りでは無理です……
 	\end{block}
-	\egroup
+	
+	フォント関連などはもっと複雑
 \end{frame}
 
 \begin{frame}
