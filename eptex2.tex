@@ -33,7 +33,7 @@
 \usepackage{scsnowman} %☃
 \usepackage{bxokumacro}
 \usepackage{menukeys}
-\renewmenumacro{\keys}{shadowedroundedkeys}
+\renewmenumacro{\keys}[+]{shadowedroundedkeys}
 \usepackage{bxrawstr} % https://zrbabbler.hatenablog.com/entry/20181222/1545495849
 \usepackage[twemoji-pdf]{bxcoloremoji} % https://github.com/zr-tex8r/BXcoloremoji
 
@@ -110,7 +110,7 @@
 
 \title{最大限 \TeX 入門}
 \subtitle{インストールと利用法}
-\author{北海道大学理学部 ひとみさん}
+\author{北海道大学理学院 宇宙理学専攻 M1 人見祥磨}
 \date{\warekitoday}
 
 \begin{document}
@@ -493,7 +493,8 @@
 	\end{center}
 	\egroup
 	
-	\emph{必ず}使う dvi ウェアをオプションに設定する
+	\emph{必ず}使う dvi ウェアをオプションに設定する\\
+	（ドライバオプション）
 	\footnote{dvi 拡張仕様の命令を dvi ファイルに埋め込む必要があるため}
 \end{frame}
 
@@ -619,6 +620,21 @@
 	\lstinputlisting{sample2.tex}
 \end{frame}
 
+\begin{frame}[fragile]
+	\frametitle{(u)p{\LaTeX} VS \LuaLaTeX}
+	\lstinputlisting[basicstyle=\ttfamily\tiny,caption={sample-lualatex.tex}]{sample-l.tex}
+	
+	\begin{block}{\LuaLaTeX を利用する場合}
+		\begin{itemize}
+			\scriptsize
+			\item jsclasses は \pLaTeX 専用 → ltjsclasses
+			\item ドライバオプションは不要
+			\item フォントの世話: fontenc → fontspec
+			\item otf パッケージも \pLaTeX 専用 → 削除
+		\end{itemize}
+	\end{block}
+\end{frame}
+
 \frame{\section{エラーへの対処}{\nishikifont 😱美文書 2 章 9 節😱}}
 
 \begin{frame}
@@ -635,7 +651,8 @@
 
 \begin{frame}[fragile]
 	\frametitle{エラーに遭遇する}
-	\TeX は\emph{プログラミング言語}なので、書き方を間違えるとエラーが出る
+	\TeX は\emph{プログラミング言語}\\
+	書き方を間違えるとエラーが出る
 	
 	\verb+\TEX+ と書いてしまうと……
 	
