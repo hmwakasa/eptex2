@@ -1,4 +1,5 @@
 %! LuaLaTeX 文書
+\documentclass[unicode,12pt,colorlinks,handout]{beamer}
 \usetheme{metropolis}
 \usefonttheme{professionalfonts}
 
@@ -294,10 +295,12 @@
 	\typecommand{\scriptsize wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unix.tar.gz}
 	
 	インストーラを起動してインストール\\
+	{\small ネットワーク経由なので電波の良いところで}\\
 	\typecmdbox{\scriptsize sudo ./install-tl -no-gui \textbackslash\\
 	~~~~-repository http://mirror.ctan.org/systems/texlive/tlnet}
 	
-	ネットワーク経由なので電波の良いところで
+	パスを忘れずに通す\\
+	\typecommand{\scriptsize echo 'export PATH=\$PATH:/usr/local/texlive/2020/bin/*/' >> ~/.bashrc}
 \end{frame}
 
 \begin{frame}
@@ -321,11 +324,13 @@
 	
 	\begin{itemize}
 		\item 統一的な管理ができる
-		\item tlmgr が使えない（はず）
+		\item tlmgr が使えない
 		\item 更新が遅れる
 	\end{itemize}
 	
 	個人的には install-tl でのインストールを勧めたい
+	\footnote{「PDF さえできればいい」という人は apt でも十分。ただし、
+	tlmgr は使えない（apt でインストールしたものと衝突する可能性）。}
 \end{frame}
 
 \frame{\section{\TeX の使い方} {\nishikifont 😀 美文書 2 章 😀}}
